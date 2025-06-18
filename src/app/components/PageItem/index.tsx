@@ -61,10 +61,9 @@ export const PageItem = ({
         ref={setNodeRef}
         style={style}
         {...attributes}
-        {...listeners} // drag works across the entire item
+        {...listeners}
         onContextMenu={handleContextMenu}
         onPointerUp={(e) => {
-          // Only trigger click-like behavior if it's a primary (left) click
           if (e.button === 0) {
             console.log('Pointer up -> PageItem clicked', id);
             handleItemClick(id);
