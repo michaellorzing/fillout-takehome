@@ -61,27 +61,26 @@ export const PageItem = ({
         ref={setNodeRef}
         style={style}
         {...attributes}
+        {...listeners} // drag works across the entire item
         onContextMenu={handleContextMenu}
-        className='select-none'
+        onPointerUp={(e) => {
+          // Only trigger click-like behavior if it's a primary (left) click
+          if (e.button === 0) {
+            console.log('Pointer up -> PageItem clicked', id);
+            handleItemClick(id);
+          }
+        }}
+        className={`group inline-flex items-center gap-2 px-4 py-2 rounded-lg border text-md transition-colors font-bold cursor-pointer select-none ${
+          active
+            ? 'bg-white text-black border-gray-300'
+            : 'bg-gray-100 border-gray-100 text-gray-400 hover:bg-white hover:text-black'
+        }`}
       >
-        <div
-          onClick={() => handleItemClick(id)}
-          className={`group inline-flex items-center gap-2 px-4 py-2 rounded-lg border text-md cursor-pointer transition-colors font-bold ${
-            active
-              ? 'bg-white text-black border-gray-300'
-              : 'bg-gray-100 border-gray-100 text-gray-400 hover:bg-white hover:text-black'
-          }`}
-        >
-          <span {...listeners} className='cursor-grab'>
-            {renderIcon(name)}
-          </span>
-
-          <span>{name}</span>
-
-          <button className='p-1 rounded-md hover:bg-white/10 transition-opacity opacity-0 group-hover:opacity-100 cursor-pointer'>
-            <EllipsisVertical className='text-gray-400' />
-          </button>
-        </div>
+        {renderIcon(name)}
+        <span>{name}</span>
+        <button className='p-1 rounded-md hover:bg-white/10 transition-opacity opacity-0 group-hover:opacity-100 cursor-pointer'>
+          <EllipsisVertical className='text-gray-400' />
+        </button>
       </div>
       <Menu id={MENU_ID}>
         <Item disabled>
