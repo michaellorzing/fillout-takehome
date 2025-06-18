@@ -65,7 +65,6 @@ export const PageItem = ({
         onContextMenu={handleContextMenu}
         onPointerUp={(e) => {
           if (e.button === 0) {
-            console.log('Pointer up -> PageItem clicked', id);
             handleItemClick(id);
           }
         }}
